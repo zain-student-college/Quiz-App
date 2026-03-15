@@ -1,0 +1,17 @@
+body{
+    font-family: 'Montserrat';
+}
+.options{
+    border: 2px solid gray;
+    padding: 10px;
+    border-radius: 10px; 
+    width: 300px; 
+    text-align: center; 
+    font-size: large;
+    font-weight: 600;
+    transition: all ease 0.3s;
+}
+.options:hover{
+    transform: scale(1.02);
+    background-color: rgb(213, 236, 245);
+}

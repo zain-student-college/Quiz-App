@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Parent Container -->
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    
+    <!-- Headings -->
+    <h1 style="text-align: center;">Quiz Game </h1>
+    <div style="display: flex; gap: 30px;">
+    <button id="start" style="width: 100px; margin-top: 30px; font-size: large;" onclick="quizLogic()">Start</button>
+    </div> 
+
+    
+    <!-- Question -->
+       
+     <div style="padding: 10px; width: 80%; text-align: center; display: flex; justify-content: center;">
+    <h2 id="question" style="margin-top: 100px;">1, Question</h2></div>
+    
+    <!-- Options -->
+    <div style="display: flex; flex-direction: column; gap: 25px; margin-top: 50px;">
+        <div id="opt1" class="options">Option 1</div>
+        <div id="opt2" class="options">Option 2</div>
+        <div id="opt3" class="options">Option 3</div>
+    </div>
+
+    <div>
+        <h3 style="margin-top: 50px; color: rgb(1, 121, 121);" id="greet"></h3>
+    </div>
+ </div>
+
+ <script>
+    let question = document.getElementById('question');
+    let opt1 = document.getElementById('opt1');
+    let opt2 = document.getElementById('opt2');
+    let opt3 = document.getElementById('opt3');
+    let greet = document.getElementById('greet');
+    let optiontxt = document.querySelectorAll('.options');
+    let start = document.getElementById('start');
+    let count = 0;
+    let win = 0;
+
+    opt1.style.display = 'none';
+    opt2.style.display = 'none';
+    opt3.style.display = 'none';
+    question.style.display = 'none';
+   
+
+  
+    //Questions Objects
+    let q1 = {
+        question : "What is the rarest blood type among humans globally?",
+        ans : "AB-Negative",
+        option1 : "O-Negative",
+        option2 : "O-Positive"
+    }
+    let q2 = {
+        question :"What is the name of the phenomenon where light bends around a massive object in space, such as a galaxy or black hole?",
+        ans : "Gravitational Lensing",
+        option1 : "Blueshift",
+        option2 : "Dopler Effect"
+    }
+    let q3 = {
+        question :"Which element has the highest melting point of any pure metal",
+        ans : "Tungsten",
+        option1 : "Titanium",
+        option2 : "Platinum"
+    }
+    let q4 = {
+        question :"Which Part of the brain controls Hunger",
+        ans : "Hypothalamus",
+        option1 : "Amygdala",
+        option2 : "Hypocampus"  
+    }
+    let q5 = {
+        question :"An old person finds it difficult to read a newspaper without glasses.What defect of vision do he have, and which lens can helps him?",
+        ans : "Myopia; Concave lens",
+        option1 : "Myopia; Convex lens",
+        option2 : "Hypermetropia; Concave lens"
+    }
+    
+    let questions = [q1,q2,q3,q4,q5];
+    
+
+    function quizLogic(){
+//Default styles 
+    question.style.display = 'block';
+    start.style.display = 'none';
+
+// Count Check
+    count++;
+    
+    for(let opt of optiontxt){
+        opt.style='none';
+        opt.innerText = '';
+    }
+        greet.innerText='';
+// Question Logic
+    let finquesindex = Math.floor(Math.random()*questions.length);
+    let finques = questions[finquesindex];
+    question.innerText=`${count}, ${finques.question}`;
+    let answer = finques.ans;
+    delete finques.question;
+
+//Options Logic
+    let options =[];
+    options = Object.values(finques)
+     
+    for(let opt of optiontxt){
+    let finopt = Math.floor(Math.random()*options.length);
+    let addopt = options.splice(finopt,1);
+    opt.innerText = addopt;
+    }
+
+//Answer Checking 
+    optiontxt.forEach(element => {
+        element.addEventListener('click',()=>{
+           
+    if(element.innerHTML===answer){
+                element.style.backgroundColor = 'lightgreen';
+                win++;
+                element.style.transform ='scale(1.03)'
+                greet.innerText = 'Great! You Got it';      
+    }
+    else {
+        element.style.backgroundColor = 'lightcoral';
+        element.style.transform ='scale(1.03)';   
+        optiontxt.forEach(element=>{
+        element.style.pointerEvents = 'none';
+            if(element.innerHTML==answer){
+                element.style.backgroundColor = 'lightgreen';  
+            }
+        })
+             greet.innerText = 'Oh No! Wrong Answer ';
+        } 
+            newQues();      
+        },)
+    });
+    questions.splice(finquesindex,1)
+    
+}
+
+
+//Next Button Logic
+   function newQues(){
+    if(count == 6){
+        setTimeout(result,1500);
+    }
+    else{
+     setTimeout(quizLogic,1500);}
+    }
+
+//Result Button Logic 
+    function result(){
+    question.innerText = "You Got : "+win+"/5 Correct";
+    opt1.style.display = 'none';
+    opt2.style.display = 'none';
+    opt3.style.display = 'none';
+    greet.innerText = "Great Work Boy 👍";
+    }
+
+
+ </script>
+
+
+</body>
+</html>
