@@ -1,17 +1,224 @@
-body{
-    font-family: 'Montserrat';
+:root {
+  --bg:           #1b1e31;
+  --surface:      #1e2236;
+  --surface-hover:#252a40;
+  --border:       #2c3050;
+  --border-hover: #424870;
+ 
+  --green:        #2e7d52;
+  --green-bg:     rgba(104, 156, 128, 0.13);
+  --green-text:   #d2dbd5;
+ 
+  --red:          #7a3535;
+  --red-bg:       rgba(216, 113, 113, 0.13);
+  --red-text:     #d4caca;
+ 
+  --btn:          #2c3050;
+  --btn-hover:    #363d68;
+ 
+  --text:         #d8ddf0;
+  --text-muted:   #8f95af;
+ 
+  --radius:       9px;
 }
-.options{
-    border: 2px solid gray;
-    padding: 10px;
-    border-radius: 10px; 
-    width: 300px; 
-    text-align: center; 
-    font-size: large;
-    font-weight: 600;
-    transition: all ease 0.3s;
+ 
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-.options:hover{
-    transform: scale(1.02);
-    background-color: rgb(213, 236, 245);
+ 
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 52px 16px 72px;
 }
+ 
+/* ── Main wrapper ── */
+body > div:first-of-type {
+  width: 100%;
+  max-width: 500px;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+ 
+/* ── Title ── */
+h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  letter-spacing: -0.2px;
+  margin-top: 4px;
+}
+ 
+/* ── Start button wrapper ── */
+body > div > div:first-of-type {
+  margin-top: 22px !important;
+}
+ 
+/* ── Start Button ── */
+button#start {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem !important;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  background: var(--btn);
+  color: var(--text);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius);
+  padding: 11px 32px;
+  cursor: pointer;
+  width: auto !important;
+  margin-top: 0 !important;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+ 
+button#start:hover {
+  background: var(--btn-hover);
+  border-color: #5a6090;
+}
+ 
+/* ── Restart Button ── */
+button#restart {
+  font-family: 'Montserrat', sans-serif;
+  background: transparent;
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius);
+  padding: 8px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+ 
+button#restart:hover {
+  background: var(--surface-hover);
+  border-color: #5a6090;
+}
+ 
+button#restart img {
+  height: 20px !important;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+ 
+button#restart:hover img {
+  opacity: 0.9;
+}
+ 
+/* ── Question wrapper ── */
+body > div > div:nth-of-type(2) {
+  width: 100% !important;
+  padding: 0 !important;
+  margin-top: 42px !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+ 
+/* ── Question ── */
+#question {
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.7;
+  color: var(--text);
+  text-align: center;
+  margin-top: 0 !important;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 26px;
+  animation: slideUp 0.3s ease both;
+}
+ 
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+ 
+/* ── Options wrapper ── */
+body > div > div:nth-of-type(3) {
+  width: 100%;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 13px !important;
+  margin-top: 30px !important;
+}
+ 
+/* ── Options ── */
+.options {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+  animation: slideUp 0.3s ease both;
+}
+ 
+.options:nth-child(1) { animation-delay: 0.05s; }
+.options:nth-child(2) { animation-delay: 0.10s; }
+.options:nth-child(3) { animation-delay: 0.15s; }
+ 
+.options:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+ 
+/* Correct — forest green */
+.options.correct {
+  background: var(--green-bg);
+  border-color: var(--green);
+  color: var(--green-text);
+}
+ 
+/* Wrong — muted red */
+.options.wrong {
+  background: var(--red-bg);
+  border-color: var(--red);
+  color: var(--red-text);
+}
+ 
+/* ── Result wrapper ── */
+body > div > div:last-of-type {
+  margin-top: 30px !important;
+  gap: 16px !important;
+}
+ 
+/* ── Greeting ── */
+#greet {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text) !important;
+  text-align: center;
+  margin-top: 0 !important;
+  padding: 13px 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  animation: slideUp 0.3s ease both;
+}
+ 
+/* ── Responsive ── */
+/* @media (max-width: 480px) {
+  body      { padding: 36px 14px 52px; }
+  h1        { font-size: 1.35rem; }
+  #question { padding: 18px 18px; font-size: 0.93rem; }
+  .options  { padding: 12px 15px; font-size: 0.86rem; }
+} */
+ 
