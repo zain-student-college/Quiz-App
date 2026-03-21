@@ -214,11 +214,99 @@ body > div > div:last-of-type {
   animation: slideUp 0.3s ease both;
 }
  
-/* ── Responsive ── */
-/* @media (max-width: 480px) {
-  body      { padding: 36px 14px 52px; }
-  h1        { font-size: 1.35rem; }
-  #question { padding: 18px 18px; font-size: 0.93rem; }
-  .options  { padding: 12px 15px; font-size: 0.86rem; }
-} */
- 
+
+
+/* ════════════════════════════════════════
+   SKELETON LOADER
+   ════════════════════════════════════════ */
+
+/* Full-page overlay — sits on top of everything */
+#skeleton-overlay {
+  position: fixed;
+  inset: 0;                         /* covers entire viewport */
+  background-color: var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 52px 16px 72px;
+  z-index: 9999;
+  margin-top: 30px;
+
+  /* Fade OUT after 2 s */
+  animation: skeletonFadeOut 0.4s ease 100s forwards;
+}
+
+/* When overlay is gone, pointer events stop blocking the real UI */
+@keyframes skeletonFadeOut {
+  to { opacity: 0; pointer-events: none; visibility: hidden; }
+}
+
+/* Inner wrapper — same max-width as the real app */
+#skeleton-wrapper {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;                       /* spacing is on each piece individually */
+}
+
+/* ── Base skeleton "bone" ── */
+.skel {
+  border-radius: var(--radius);
+  background: linear-gradient(
+    90deg,
+    #252a40 0%,
+    #353b5e 40%,
+    #424870 55%,
+    #24273b 70%,
+    #252a40 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+/* The shimmer sweep */
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Individual skeleton pieces (match the real elements) ── */
+
+
+/* Question card */
+.skel-question {
+  width: 100%;
+  height: 95px;
+  margin-top: 42px;
+}
+
+/* Options group wrapper — no shimmer, just layout */
+.skel-options-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  margin-top: 15px;
+}
+
+/* Each option row */
+.skel-option {
+  width: 100%;
+  height: 50px;
+}
+
+/* Greeting box */
+.skel-greet {
+  width: 220px;
+  height: 42px;
+  margin-top: 30px;
+}
+
+
+.skel-question { animation-delay: 0.00s; }
+.skel-options-wrapper .skel-option:nth-child(1) { animation-delay: 0.20s; }
+.skel-options-wrapper .skel-option:nth-child(2) { animation-delay: 0.10s; }
+.skel-options-wrapper .skel-option:nth-child(3) { animation-delay: 0.40s; }
+.skel-greet    { animation-delay: 0.30s; }

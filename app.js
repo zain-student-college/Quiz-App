@@ -6,6 +6,7 @@ let question = document.getElementById('question');
     let optiontxt = document.querySelectorAll('.options');
     let start = document.getElementById('start');
     let restart = document.getElementById('restart');
+    let animate = document.getElementById('skeleton-overlay');
     let count = 0;
     let win = 0;
     let answer = "";
@@ -14,15 +15,17 @@ let question = document.getElementById('question');
     let usedarr = [];
 
     opt1.style.display = 'none';
+    animate.style.display = 'none';
     opt2.style.display = 'none';
     opt3.style.display = 'none';
     restart.style.display = 'none';
     question.style.display = 'none';
    
-    //Getting Random Questions Function
+    //Getting Random Questions Function Through API
      let questions = [];
-        let url = "https://opentdb.com/api.php?amount=10&category=17&difficulty=medium&type=multiple";
+        let url = "https://opentdb.com/api.php?amount=10&category=17&difficulty=easy&type=multiple";
         let getdata = async ()=>{
+        animate.style.display = 'flex';
         start.style.pointerEvents = 'none';
         let data = await fetch(url);
         console.log(data);
@@ -34,13 +37,14 @@ let question = document.getElementById('question');
     
     function quizLogic(){
 //Default styles 
+    animate.style.display = 'none';
     question.style.display = 'block';
     start.style.display = 'none';
     restart.style.display = 'none';
     
 // Count Check
     count++;
-    
+//Removing Styles  
     for(let opt of optiontxt){
         opt.style='none';
         opt.classList.remove('correct');
@@ -80,13 +84,11 @@ let question = document.getElementById('question');
         } ;
     }
     else {
-        // element.style.backgroundColor = 'lightcoral';
         element.classList.add('wrong');
         element.style.transform ='scale(1.03)';   
         loss++;
         optiontxt.forEach(element=>{
-            if(element.innerHTML==answer){
-            // element.style.backgroundColor = 'lightgreen';  
+            if(element.innerHTML==answer){  
             element.classList.add('correct');
             }
         })
@@ -119,7 +121,7 @@ let question = document.getElementById('question');
     perct = win*100/usedarr.length;
     loss = usedarr.length -win;
 
-//Follow Up Message
+//Follow Up Messages
     if(win==0){
         greet.innerText = "0 Correct Oh No 🏳️, It's Okay Give It Another Try 👍";
     }
@@ -141,5 +143,4 @@ restart.addEventListener('click',()=>{
     usedarr =[];
     console.log(usedarr);
     getdata();
-    restart.style.pointerEvents = 'none';
 })
